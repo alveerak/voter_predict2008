@@ -18,9 +18,17 @@ X_test = np.genfromtxt('test_2008.csv', delimiter=',')[1:,:]
 #print (y_train)
 #print (X_test[0])
 
-from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import RandomForestClassifier
 
-tree = DecisionTreeClassifier()
+tree = RandomForestClassifier(n_estimators=600, max_depth=300)
 tree.fit(X_train, y_train)
 
-printf("model accuracy: {tree.score(X_train, y_train)}")
+print("model accuracy: ", tree.score(X_train, y_train))
+
+y_predict = tree.predict_proba(X_test)
+print(y_predict)
+output = []
+output.append(["id", "target"])
+for i in range(len(y_predict)):
+    # output.append([i, y_predict[i][0]])
+    output.append([i, y_predict[i][1]])
